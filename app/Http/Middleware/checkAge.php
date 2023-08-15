@@ -17,7 +17,7 @@ class checkAge
      */
     public function handle(Request $request, Closure $next)
     {
-        echo "global middleware ";
+        // echo "global middleware ";
         // if($request->coN && $request->coN=='EuSopht')
         // {
         //     return redirect('welcome');

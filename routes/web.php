@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,17 @@ Route::get('/', function () {
     return view('second');
 });
 
-Route::view('welcome', '/welcome');
+Route::delete('deletetask/{id}', [TaskController::class, 'deleteTask']);
+
+Route::post('updatetask/{id}',[TaskController::class, 'updateTask']);
+
+
+// Route::group(['middleware' => ['auth']], function () {
+    Route::get('showtask',[TaskController::class,'showTask']);
+
+    Route::post('newtask',[TaskController::class,'newTask']);
+    Route::view('welcome', '/welcome');
+// });
 Route::view('second', '/second');
 Route::view('userss', '/userss');
 
