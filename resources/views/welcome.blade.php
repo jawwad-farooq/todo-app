@@ -36,11 +36,9 @@
                      tbody.empty();
                      $.each(response.task, function (key, item) {
                         var isChecked = item.check ? 'checked' : '';
-                        tbody.append('<tr>\
-                           <td>' + item.taskname + '</td>\
+                        tbody.append('<tr><td>' + item.taskname + '</td>\
                            <td><input type="checkbox" name="checkmark" class="check-mark" value="done" data-task-id="'+item.id+'" '+isChecked+'></td>\
-                           <td><button class="del-btn btn btn-danger" value="'+ item.id +'">delete</button> </td>\
-                        </tr>');
+                           <td><button class="del-btn btn btn-danger" value="'+ item.id +'">delete</button> </td></tr>');
                      });
                },
                error: function (xhr, status, error) {
@@ -108,8 +106,7 @@
 </head>
 <body  style="width: 80%; margin:auto;">
    
-
-   <h1>Create Task</h1>
+   <h1>{{ Session::get('user') }} Create Task {{ Session::get('userID')}}</h1>
 {{-- @auth --}}
   <form action="{{url('newtask')}}" method="POST" id="addpost">
     @csrf
@@ -129,11 +126,7 @@
             <th>status</th>
             <th>action</th>
          </tr>
-         <tbody>
-              
-         </tbody>
-        
-         
+         <tbody></tbody>
       </table>
     </div>
    </body>
