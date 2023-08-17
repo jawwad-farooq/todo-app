@@ -39,10 +39,10 @@ class UserController extends Controller
 
         $username = $request->input('name');
         $password = $request->input('password');
-        $userID = User::where('id');
+        // $userID = User::where('id');
         $user = User::where('name', $username)->where('password', $password)->first();
         $request->session()->put('user', $user);
-        $request->session()->put('userID', $userID);
+        // $request->session()->put('userID', $userID);
 
         if ($user !== null) {
             return redirect('welcome');
@@ -61,5 +61,10 @@ class UserController extends Controller
         
         // return redirect()->back()->withErrors(['name' => 'invalid']);
         
+    }
+
+    public function logout(){
+        Session::flush();
+        return redirect('user');
     }
 }

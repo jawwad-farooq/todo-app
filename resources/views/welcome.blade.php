@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+   <h1 style="display: none;">{{ $user = Session::get('user') }} </h1>
 
 <head>
   <title>Bootstrap Example</title>
@@ -26,7 +27,7 @@
          function displayData() {
             $.ajax({
                type: 'GET',
-               url: "{{url('showtask')}}",
+               url: "{{url('showtask')}}"+/+{{$user->id}},
                dataType: "json",
                headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -36,7 +37,7 @@
                      tbody.empty();
                      $.each(response.task, function (key, item) {
                         var isChecked = item.check ? 'checked' : '';
-                        tbody.append('<tr><td>' + item.taskname + '</td>\
+                        tbody.append('<tr id="'+item.user_id+' / {{$user->id}}"><td>' + item.taskname + '</td>\
                            <td><input type="checkbox" name="checkmark" class="check-mark" value="done" data-task-id="'+item.id+'" '+isChecked+'></td>\
                            <td><button class="del-btn btn btn-danger" value="'+ item.id +'">delete</button> </td></tr>');
                      });
@@ -105,12 +106,14 @@
   </script>
 </head>
 <body  style="width: 80%; margin:auto;">
+
    
-   <h1>{{ Session::get('user') }} Create Task {{ Session::get('userID')}}</h1>
+   <h1>{{ $user->name }} Create Task</h1>
+   <a href="{{url('logout')}}">Logout</a>
 {{-- @auth --}}
   <form action="{{url('newtask')}}" method="POST" id="addpost">
     @csrf
-    {{-- <input type="hidden" name="user_id" value="{{ Auth::user()->id }}"> --}}
+    <input type="hidden" name="user_id" value="{{$user->id}}">
     <input type="text" name="task_name" class="form-control" placeholder="Enter Task Name">
     <input type="submit" value="Add" class="btn btn-primary">
   </form>

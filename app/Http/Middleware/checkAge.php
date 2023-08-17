@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
+use Session;
 
 class checkAge
 {
@@ -17,12 +18,14 @@ class checkAge
      */
     public function handle(Request $request, Closure $next)
     {
-        // echo "global middleware ";
-        // if($request->coN && $request->coN=='EuSopht')
-        // {
-        //     return redirect('welcome');
+        $path = $request->path();
+        // echo $path;
+        // if( $path != 'user' && !Session::get('user')){
+        //     return redirect('/user');
         // }
-        // return redirect('/second');
+        // else{
+        //     return redirect('/welcome');
+        // }
         return $next($request);
     }
 }

@@ -14,16 +14,15 @@ class TaskController extends Controller
         // $user = Auth::user();
 
         $task = new Task;
-        $task->id=$request->user_id;
+        $task->user_id=$request->user_id;
         $task->taskname=$request->input('task_name');
         $task->save();
 
         return response()->json([]);
     }
 
-    function showTask() {
-        $task = Task::all();
-        // dd($task);
+    function showTask($userId) {
+        $task = Task::where('user_id', $userId)->get();
         return response()->json([
             'task' => $task
         ]);

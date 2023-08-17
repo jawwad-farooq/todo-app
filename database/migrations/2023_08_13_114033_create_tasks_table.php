@@ -11,12 +11,13 @@ class CreateTasksTable extends Migration
      *
      * @return void
      */
-     // $table->unsignedBigInteger('id');
-            // $table->foreign('id')->references('id')->on('users');
-    public function up()
+
+     public function up()
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('taskname');
             $table->string('check')->nullable();
             $table->timestamps();
