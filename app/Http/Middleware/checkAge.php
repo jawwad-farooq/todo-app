@@ -19,13 +19,13 @@ class checkAge
     public function handle(Request $request, Closure $next)
     {
         $path = $request->path();
-        // echo $path;
-        // if( $path != 'user' && !Session::get('user')){
-        //     return redirect('/user');
-        // }
-        // else{
-        //     return redirect('/welcome');
-        // }
+        echo $path;
+        if( $path == 'welcome' && !Session::get('user')){
+            return redirect('/user');
+        }
+        else if($path == 'user' && Session::get('user')){
+            return redirect('/welcome');
+        }
         return $next($request);
     }
 }

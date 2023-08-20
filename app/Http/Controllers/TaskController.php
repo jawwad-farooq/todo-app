@@ -21,12 +21,20 @@ class TaskController extends Controller
         return response()->json([]);
     }
 
-    function showTask($userId) {
-        $task = Task::where('user_id', $userId)->get();
-        return response()->json([
-            'task' => $task
-        ]);
+    public function showTask($userId)
+    {
+        try {
+            $tasks = Task::where('user_id', $userId)->get();
+            return response()->json([
+                'task' => $tasks
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'An error occurred while fetching tasks.'
+            ], 500);
+        }
     }
+
 
     function deleteTask($id){
         $task = Task::find($id);

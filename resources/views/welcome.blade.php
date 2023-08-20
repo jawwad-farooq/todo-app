@@ -25,19 +25,22 @@
          displayData();
 
          function displayData() {
+            var userId = "{{ $user->id }}";
             $.ajax({
                type: 'GET',
-               url: "{{url('showtask')}}"+/+{{$user->id}},
+               url: "{{ url('showtask') }}/" + userId,
                dataType: "json",
                headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                },
-               success: function (response) {
+               success: function (data) {
+                  console.log("okkkkkk!");
                      var tbody = $('tbody');
                      tbody.empty();
-                     $.each(response.task, function (key, item) {
+                     $.each(data.task, function (key, item) {
                         var isChecked = item.check ? 'checked' : '';
-                        tbody.append('<tr id="'+item.user_id+' / {{$user->id}}"><td>' + item.taskname + '</td>\
+                        tbody.append('<tr id="' + task.user_id + '_' + task.id + '">\
+                           <td>' + item.taskname + '</td>\
                            <td><input type="checkbox" name="checkmark" class="check-mark" value="done" data-task-id="'+item.id+'" '+isChecked+'></td>\
                            <td><button class="del-btn btn btn-danger" value="'+ item.id +'">delete</button> </td></tr>');
                      });
@@ -124,12 +127,16 @@
     <div>
       @section('content')
       <table class="table table-striped">
-         <tr>
-            <th>task name</th>
-            <th>status</th>
-            <th>action</th>
-         </tr>
-         <tbody></tbody>
+         <thead>
+            <tr>
+               <th>task name</th>
+               <th>status</th>
+               <th>action</th>
+            </tr>
+         </thead>
+         <tbody>
+
+         </tbody>
       </table>
     </div>
    </body>
