@@ -10,9 +10,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-  <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
-  </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   
   <script>
       $(document).ready(function(){
@@ -22,31 +21,30 @@
             }
          });
 
-         displayData();
+         
+         var userId = "{{ $user->id }}";
+         displayData(userId);
 
-         function displayData() {
-            var userId = "{{ $user->id }}";
+         function displayData(userId) {
             $.ajax({
                type: 'GET',
-               url: "{{ url('showtask') }}/" + userId,
-               dataType: "json",
-               headers: {
-                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-               },
-               success: function (data) {
-                  console.log("okkkkkk!");
-                     var tbody = $('tbody');
+               url: '/showtask/'+userId,
+               dataType : 'json',
+               // headers: {
+               //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               // },
+               success: function (response) {
+                     var tbody = $('#getdata');
                      tbody.empty();
-                     $.each(data.task, function (key, item) {
+                     $.each(response, function (key, item) {
                         var isChecked = item.check ? 'checked' : '';
-                        tbody.append('<tr id="' + task.user_id + '_' + task.id + '">\
-                           <td>' + item.taskname + '</td>\
+                        tbody.append('<tr><td>' + item.taskname + '</td>\
                            <td><input type="checkbox" name="checkmark" class="check-mark" value="done" data-task-id="'+item.id+'" '+isChecked+'></td>\
                            <td><button class="del-btn btn btn-danger" value="'+ item.id +'">delete</button> </td></tr>');
                      });
                },
                error: function (xhr, status, error) {
-                     console.error("Error fetching data:", error);
+                     console.error(error);
                }
             });
          }
@@ -61,7 +59,7 @@
                   $('#addpost')[0].reset();
                }
             });
-            displayData();
+            displayData(userId);
          });
 
         
@@ -84,9 +82,6 @@
          });
 
          $(document).on('click', '.check-mark', function() {
-            // e.preventDefault();
-            // var id = $(this).val();
-            console.log("ggg");
             var isChecked = $(this).prop('checked');
             var taskId = $(this).data('task-id');
             $.ajax({
@@ -112,7 +107,7 @@
 
    
    <h1>{{ $user->name }} Create Task</h1>
-   <a href="{{url('logout')}}">Logout</a>
+   <a href="{{url('logout')}}" class="btn btn-danger" style="margin-bottom: 1em;">Logout</a>
 {{-- @auth --}}
   <form action="{{url('newtask')}}" method="POST" id="addpost">
     @csrf
@@ -134,7 +129,7 @@
                <th>action</th>
             </tr>
          </thead>
-         <tbody>
+         <tbody id="getdata">
 
          </tbody>
       </table>

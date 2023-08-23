@@ -25,9 +25,7 @@ class TaskController extends Controller
     {
         try {
             $tasks = Task::where('user_id', $userId)->get();
-            return response()->json([
-                'task' => $tasks
-            ]);
+            return response()->json($tasks)->header('Content-Type', 'application/json');
         } catch (\Exception $e) {
             return response()->json([
                 'error' => 'An error occurred while fetching tasks.'
@@ -46,12 +44,7 @@ class TaskController extends Controller
     }
 
     function updateTask(Request $request, $id){
-        // $task = Task::find($id);
-        // $task->check=$request->has('checkmark') ? $request->input('checkmark') : null;
         $task = Task::find($id);
-        // $isChecked = $request->input('isChecked');
-    
-        // Update the checkbox value in the database
         $task->check = $request->input('isChecked') ? 'done' : null;
         $task->save();
         return response()->json(['success'=>true]);

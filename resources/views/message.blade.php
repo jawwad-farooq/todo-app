@@ -51,7 +51,7 @@
              {{($message)}}
          @enderror</span>
          <br>
-         <input type="text" name="password" placeholder="enter password" class="form-control">
+         <input type="password" name="password" placeholder="enter password" class="form-control">
          <span style="color: aqua">@error('password')
             {{($message)}}
          @enderror</span>
