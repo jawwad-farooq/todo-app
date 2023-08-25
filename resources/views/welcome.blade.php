@@ -22,32 +22,45 @@
          });
 
          
-         var userId = "{{ $user->id }}";
-         displayData(userId);
+         // var userId = "{{ $user->id }}";
+         
 
-         function displayData(userId) {
+         // function displayData(userId) {
+         //    $.ajax({
+         //       type: 'GET',
+         //       url: '/showtask/'+userId,
+         //       dataType : 'json',
+         //       // headers: {
+         //       //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+         //       // },
+         //       success: function (response) {
+         //             var tbody = $('#getdata');
+         //             tbody.empty();
+         //             $.each(response, function (key, item) {
+         //                var isChecked = item.check ? 'checked' : '';
+         //                tbody.append('<tr><td>' + item.taskname + '</td>\
+         //                   <td><input type="checkbox" name="checkmark" class="check-mark" value="done" data-task-id="'+item.id+'" '+isChecked+'></td>\
+         //                   <td><button class="del-btn btn btn-danger" value="'+ item.id +'">delete</button> </td></tr>');
+         //             });
+         //       },
+         //       error: function (xhr, status, error) {
+         //             console.error(error);
+         //       }
+         //    });
+         // }
+
+         function displayData() {
             $.ajax({
+               url: "{{ url('showtask') }}",
                type: 'GET',
-               url: '/showtask/'+userId,
-               dataType : 'json',
-               // headers: {
-               //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-               // },
-               success: function (response) {
-                     var tbody = $('#getdata');
-                     tbody.empty();
-                     $.each(response, function (key, item) {
-                        var isChecked = item.check ? 'checked' : '';
-                        tbody.append('<tr><td>' + item.taskname + '</td>\
-                           <td><input type="checkbox" name="checkmark" class="check-mark" value="done" data-task-id="'+item.id+'" '+isChecked+'></td>\
-                           <td><button class="del-btn btn btn-danger" value="'+ item.id +'">delete</button> </td></tr>');
-                     });
-               },
-               error: function (xhr, status, error) {
-                     console.error(error);
+               success: function(res) {
+                  console.log(res);
+                  alert(res);
                }
             });
-         }
+         }   
+
+         displayData();
 
          $("#addpost").on('submit',function(event){
             event.preventDefault();
@@ -59,7 +72,7 @@
                   $('#addpost')[0].reset();
                }
             });
-            displayData(userId);
+            // displayData(userId);
          });
 
         
@@ -73,7 +86,7 @@
                dataType:'json',
                success:function(result){
                   console.log("Task deleted successfully:", result);
-                  displayData(); 
+                  // displayData(); 
                },
                error: function(xhr, status, error) {
                      console.error("Error deleting task:", error);
@@ -93,7 +106,7 @@
                },
                success:function(result){
                   console.log("Task updated successfully:", result);
-                  displayData(); 
+                  // displayData(); 
                },
                error: function(xhr, status, error) {
                      console.error("Error updating task:", error);
@@ -120,7 +133,8 @@
     @endauth --}}
 
     <div>
-      @section('content')
+      {{-- @section('content') --}}
+      <button onclick="displayData()">Fetch and Display Tasks</button>
       <table class="table table-striped">
          <thead>
             <tr>

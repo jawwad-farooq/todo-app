@@ -23,7 +23,7 @@ class UserController extends Controller
         $member->name=$req->name;
         $member->password=$req->password;
         $member->save();
-        return redirect('user');
+        return redirect('sign-in');
     }
 
     public function __invoke(){
@@ -43,7 +43,7 @@ class UserController extends Controller
         if ($user !== null) {
             return redirect('welcome');
         } else {
-            return redirect('user')->with('error', 'Invalid credentials. Please try again.');
+            return redirect('sign-in')->with('error', 'Invalid credentials. Please try again.');
         }
 
         

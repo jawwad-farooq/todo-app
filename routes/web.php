@@ -19,13 +19,11 @@ use App\Http\Middleware\checkAge;
 |
 */
 
-Route::get('/', function () {
-    return view('second');
-});
+
 
 Route::post('login',[UserController::class,'Login']);
 Route::get('logout',[UserController::class,'logout']);
-Route::get('showtask/{userId}', [TaskController::class, 'showTask']);
+Route::get('showtask', [TaskController::class, 'showTask']);
 Route::delete('deletetask/{id}', [TaskController::class, 'deleteTask']);
 
 Route::post('updatetask/{id}',[TaskController::class, 'updateTask']);
@@ -33,9 +31,9 @@ Route::post('newtask',[TaskController::class,'newTask']);
 Route::post('user',[UserController::class,'getData']);
 
 Route::group(['Middleware'=>"web"], function(){
-    Route::view('user','message');
+    Route::view('sign-in','sign-in');
     Route::view('welcome', '/welcome');
-    Route::view('second', '/second');
+    Route::view('/', '/sign-up');
 });
 
 

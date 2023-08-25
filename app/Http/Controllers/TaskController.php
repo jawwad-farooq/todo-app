@@ -21,16 +21,12 @@ class TaskController extends Controller
         return response()->json([]);
     }
 
-    public function showTask($userId)
+    public function showTask()
     {
-        try {
-            $tasks = Task::where('user_id', $userId)->get();
-            return response()->json($tasks)->header('Content-Type', 'application/json');
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'An error occurred while fetching tasks.'
-            ], 500);
-        }
+        // $tasks = Task::where('user_id', $userId)->get();
+        $tasks = Task::all();
+        // return view('words.index', ['task' => $tasks]);
+        return response()->json($tasks);
     }
 
 
