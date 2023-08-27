@@ -3,7 +3,7 @@
    <h1 style="display: none;">{{ $user = Session::get('user') }} </h1>
 
 <head>
-  <title>Bootstrap Example</title>
+  <title>welcome</title>
   <meta charset="utf-8">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,43 +24,40 @@
          
          // var userId = "{{ $user->id }}";
          
-
-         // function displayData(userId) {
-         //    $.ajax({
-         //       type: 'GET',
-         //       url: '/showtask/'+userId,
-         //       dataType : 'json',
-         //       // headers: {
-         //       //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-         //       // },
-         //       success: function (response) {
-         //             var tbody = $('#getdata');
-         //             tbody.empty();
-         //             $.each(response, function (key, item) {
-         //                var isChecked = item.check ? 'checked' : '';
-         //                tbody.append('<tr><td>' + item.taskname + '</td>\
-         //                   <td><input type="checkbox" name="checkmark" class="check-mark" value="done" data-task-id="'+item.id+'" '+isChecked+'></td>\
-         //                   <td><button class="del-btn btn btn-danger" value="'+ item.id +'">delete</button> </td></tr>');
-         //             });
-         //       },
-         //       error: function (xhr, status, error) {
-         //             console.error(error);
-         //       }
-         //    });
-         // }
-
          function displayData() {
             $.ajax({
-               url: "{{ url('showtask') }}",
                type: 'GET',
-               success: function(res) {
-                  console.log(res);
-                  alert(res);
+               url: '/showtask/',
+               dataType : 'json',
+               success: function (response) {
+                     var tbody = $('#getdata');
+                     tbody.empty();
+                     $.each(response, function (key, item) {
+                        var isChecked = item.check ? 'checked' : 'noCheck';
+                        tbody.append('<tr><td>' + item.taskname + '</td>\
+                           <td><input type="checkbox" name="checkmark" class="check-mark" value="done" data-task-id="'+item.id+'" '+isChecked+'></td>\
+                           <td><button class="del-btn btn btn-danger" value="'+ item.id +'">delete</button> </td></tr>');
+                     });
+               },
+               error: function (xhr, status, error) {
+                     console.error(error);
                }
             });
-         }   
+         }
 
          displayData();
+
+         var userID = "{{ $user->id }}";
+         function displayUserID(){
+            $.ajax({
+               type:'GET',
+               url:'showuserid/'+userID,
+               success:function(response){
+                  $('#us').append('<a>'+response+'</a>');
+               }
+            });
+         }
+         displayUserID();
 
          $("#addpost").on('submit',function(event){
             event.preventDefault();
@@ -72,7 +69,7 @@
                   $('#addpost')[0].reset();
                }
             });
-            // displayData(userId);
+            displayData();
          });
 
         
@@ -86,7 +83,7 @@
                dataType:'json',
                success:function(result){
                   console.log("Task deleted successfully:", result);
-                  // displayData(); 
+                  displayData(); 
                },
                error: function(xhr, status, error) {
                      console.error("Error deleting task:", error);
@@ -102,11 +99,11 @@
                url:'/updatetask/' + taskId,
                data: {
                   _token: $('meta[name="csrf-token"]').attr('content'),
-                  isChecked: isChecked
+                  isCheckedy: isChecked
                },
                success:function(result){
                   console.log("Task updated successfully:", result);
-                  // displayData(); 
+                  displayData(); 
                },
                error: function(xhr, status, error) {
                      console.error("Error updating task:", error);
@@ -115,26 +112,55 @@
          });
      });
   </script>
-</head>
-<body  style="width: 80%; margin:auto;">
 
-   
+<style>
+   body {
+       /* display: flex; */
+       /* flex-wrap: wrap; */
+       background-color: #12151d !important;
+       color: #fff;
+       font-family: Tahoma;
+       text-transform: capitalize;
+       padding: 3em 0px;
+   }
+   h1 {
+       color:red;
+       margin: 0px 0px 20px;
+   }
+   input.form-control, tr {
+       background: transparent !important;
+       color: #fff;
+   }
+   .card {
+       max-width: 1440px;
+       width: 80%;
+       margin: auto;
+       padding: 25px;
+       border-radius: 20px;
+       box-shadow: 0 0 17px black;
+   }
+   .top-line {
+      display: flex;
+      justify-content: space-between;
+   }
+</style>
+</head>
+<body>
+
+   <div class="card">
+      <div class="top-line">
    <h1>{{ $user->name }} Create Task</h1>
-   <a href="{{url('logout')}}" class="btn btn-danger" style="margin-bottom: 1em;">Logout</a>
-{{-- @auth --}}
+   <a href="{{url('logout')}}" class="btn btn-danger" style="margin-bottom: auto; margin-top: auto;">Logout</a></div>
   <form action="{{url('newtask')}}" method="POST" id="addpost">
     @csrf
     <input type="hidden" name="user_id" value="{{$user->id}}">
     <input type="text" name="task_name" class="form-control" placeholder="Enter Task Name">
-    <input type="submit" value="Add" class="btn btn-primary">
+    <input type="submit" value="Add" class="btn btn-primary" style="margin-top: 20px">
   </form>
-  {{-- @else
-        <p>You are not authenticated.</p>
-    @endauth --}}
+</div>
 
-    <div>
-      {{-- @section('content') --}}
-      <button onclick="displayData()">Fetch and Display Tasks</button>
+
+<div class="card">
       <table class="table table-striped">
          <thead>
             <tr>
@@ -144,9 +170,17 @@
             </tr>
          </thead>
          <tbody id="getdata">
-
+            {{-- @foreach ($rows as $row)
+               <tr>
+                  <td>{{ $row['taskname'] }}</td>
+                  <td><input type="checkbox" name="checkmark" class="check-mark" value="done" data-task-id="{{ $row['id'] }}" ></td>
+                  <td><button class="del-btn btn btn-danger" value="{{ $row['id'] }}">delete</button> </td>
+               </tr>
+            @endforeach --}}
          </tbody>
       </table>
+      <h1 id="us"></h1>
+      <input type="checkbox">
     </div>
    </body>
 </html>

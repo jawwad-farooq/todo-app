@@ -26,7 +26,17 @@ class TaskController extends Controller
         // $tasks = Task::where('user_id', $userId)->get();
         $tasks = Task::all();
         // return view('words.index', ['task' => $tasks]);
+        // return view('welcome',['rows'=>$tasks]);
         return response()->json($tasks);
+    }
+
+    public function showUserID($userID)
+    {
+        // $tasks = Task::where('user_id', $userId)->get();
+        $current = Task::where('user_id', $userID)->get();
+        // return view('words.index', ['task' => $tasks]);
+        // return view('welcome',['rows'=>$tasks]);
+        return response()->json($current);
     }
 
 
@@ -41,7 +51,7 @@ class TaskController extends Controller
 
     function updateTask(Request $request, $id){
         $task = Task::find($id);
-        $task->check = $request->input('isChecked') ? 'done' : null;
+        $task->check = $request->input('isCheckedy') ? 'done' : null;
         $task->save();
         return response()->json(['success'=>true]);
     }

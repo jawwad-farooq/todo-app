@@ -24,6 +24,7 @@ use App\Http\Middleware\checkAge;
 Route::post('login',[UserController::class,'Login']);
 Route::get('logout',[UserController::class,'logout']);
 Route::get('showtask', [TaskController::class, 'showTask']);
+Route::get('showuserid/{userID}', [TaskController::class, 'showUserID']);
 Route::delete('deletetask/{id}', [TaskController::class, 'deleteTask']);
 
 Route::post('updatetask/{id}',[TaskController::class, 'updateTask']);

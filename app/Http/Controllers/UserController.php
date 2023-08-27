@@ -16,11 +16,13 @@ class UserController extends Controller
     function getData(Request $req){
         $req->validate([
             'name' => 'required',
+            'email' => 'required',
             'password' => 'required'
         ]);
         
         $member = new User;
         $member->name=$req->name;
+        $member->email=$req->email;
         $member->password=$req->password;
         $member->save();
         return redirect('sign-in');
@@ -51,6 +53,6 @@ class UserController extends Controller
 
     public function logout(){
         Session::flush();
-        return redirect('user');
+        return redirect('sign-in');
     }
 }
