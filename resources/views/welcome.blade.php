@@ -47,13 +47,14 @@
 
          displayData();
 
-         var userID = "{{ $user->id }}";
+         var userID = $('.user_id').val();
+         console.log(userID);
          function displayUserID(){
             $.ajax({
                type:'GET',
                url:'showuserid/'+userID,
                success:function(response){
-                  $('#us').append('<a>'+response+'</a>');
+                  $('#us').append('<a>'+response.user_id+'</a>');
                }
             });
          }
@@ -153,7 +154,7 @@
    <a href="{{url('logout')}}" class="btn btn-danger" style="margin-bottom: auto; margin-top: auto;">Logout</a></div>
   <form action="{{url('newtask')}}" method="POST" id="addpost">
     @csrf
-    <input type="hidden" name="user_id" value="{{$user->id}}">
+    <input type="hidden" name="user_id" value="{{$user->id}}" class="user_id">
     <input type="text" name="task_name" class="form-control" placeholder="Enter Task Name">
     <input type="submit" value="Add" class="btn btn-primary" style="margin-top: 20px">
   </form>
@@ -180,7 +181,6 @@
          </tbody>
       </table>
       <h1 id="us"></h1>
-      <input type="checkbox">
     </div>
    </body>
 </html>

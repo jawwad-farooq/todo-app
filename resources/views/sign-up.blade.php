@@ -52,7 +52,7 @@
         <br>
         <input type="email" name="email" placeholder="enter email" class="form-control"  autocomplete="off">
         <span style="color: aqua">
-            @error('name')
+            @error('email')
                 {{ $message }}
             @enderror
         </span>

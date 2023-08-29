@@ -33,10 +33,17 @@ class TaskController extends Controller
     public function showUserID($userID)
     {
         // $tasks = Task::where('user_id', $userId)->get();
-        $current = Task::where('user_id', $userID)->get();
+        $current = Task::find($userID);
         // return view('words.index', ['task' => $tasks]);
         // return view('welcome',['rows'=>$tasks]);
-        return response()->json($current);
+        if(!$userID){
+            return response->json([
+                'error' => 'user not found'
+            ], 404);
+        }
+        else{
+            return response()->json($current);
+        }
     }
 
 

@@ -19,13 +19,20 @@ class UserController extends Controller
             'email' => 'required',
             'password' => 'required'
         ]);
-        
-        $member = new User;
-        $member->name=$req->name;
-        $member->email=$req->email;
-        $member->password=$req->password;
-        $member->save();
-        return redirect('sign-in');
+
+        $username = $req->input('name');
+
+        $member = User::where('name', $username)->first();
+
+        if(!$member){
+            $member = new User;
+            $member->name=$req->name;
+            $member->email=$req->email;
+            $member->password=$req->password;
+            $member->save();
+            return redirect('sign-in');
+        }
+        return response()->json(['error' => 'User already exist'], 200);        
     }
 
     public function __invoke(){
