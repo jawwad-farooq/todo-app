@@ -21,23 +21,24 @@ class TaskController extends Controller
         return response()->json([]);
     }
 
-    public function showTask()
-    {
-        // $tasks = Task::where('user_id', $userId)->get();
-        $tasks = Task::all();
-        // return view('words.index', ['task' => $tasks]);
-        // return view('welcome',['rows'=>$tasks]);
-        return response()->json($tasks);
-    }
+    // public function showTask()
+    // {
+    //     // $tasks = Task::where('user_id', $userId)->get();
+    //     $tasks = Task::all();
+    //     // return view('words.index', ['task' => $tasks]);
+    //     // return view('welcome',['rows'=>$tasks]);
+    //     return response()->json($tasks);
+    // }
 
-    public function showUserID($userID)
+    // public function showUserID($userID)
+    public function showTask($userID)
     {
         // $tasks = Task::where('user_id', $userId)->get();
-        $current = Task::find($userID);
+        $current = Task::where('user_id', $userID)->get();
         // return view('words.index', ['task' => $tasks]);
         // return view('welcome',['rows'=>$tasks]);
         if(!$userID){
-            return response->json([
+            return response()->json([
                 'error' => 'user not found'
             ], 404);
         }

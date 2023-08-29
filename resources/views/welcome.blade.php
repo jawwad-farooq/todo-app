@@ -23,11 +23,12 @@
 
          
          // var userId = "{{ $user->id }}";
+         var userID = $('.user_id').val();
          
          function displayData() {
             $.ajax({
                type: 'GET',
-               url: '/showtask/',
+               url: '/showtask/'+userID,
                dataType : 'json',
                success: function (response) {
                      var tbody = $('#getdata');
@@ -47,14 +48,17 @@
 
          displayData();
 
-         var userID = $('.user_id').val();
+         
          console.log(userID);
          function displayUserID(){
             $.ajax({
                type:'GET',
                url:'showuserid/'+userID,
                success:function(response){
-                  $('#us').append('<a>'+response.user_id+'</a>');
+                  $.each(response, function (key, item) {
+                     $('#us').append('<a>'+item.user_id+'</a><a>'+item.taskname+'</a>');
+                  });
+                  console.log(response);
                }
             });
          }
