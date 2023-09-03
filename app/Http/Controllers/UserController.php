@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 use Session;
 
 class UserController extends Controller
@@ -28,11 +30,11 @@ class UserController extends Controller
             $member = new User;
             $member->name=$req->name;
             $member->email=$req->email;
-            $member->password=$req->password;
+            $member->password=Hash::make($req->input('password'));
             $member->save();
             return redirect('sign-in');
         }
-        return response()->json(['error' => 'User already exist'], 200);        
+        return back()->with('error', 'User already exist');    
     }
 
     public function __invoke(){
@@ -46,10 +48,10 @@ class UserController extends Controller
         $username = $request->input('name');
         $password = $request->input('password');
 
-        $user = User::where('name', $username)->where('password', $password)->first();
+        $user = User::where('name', $username)->first();
         $request->session()->put('user', $user);
 
-        if ($user !== null) {
+        if ($user !== null && Hash::check($password, $user->password)) {
             return redirect('welcome');
         } else {
             return redirect('sign-in')->with('error', 'Invalid credentials. Please try again.');

@@ -43,11 +43,14 @@
     <h1>SignUp</h1>
     <form action="user" method="POST" class="form-group">
         @csrf
-        <input type="text" name="name" placeholder="Enter name" class="form-control" autocomplete="off">
+        <input type="text" name="name" placeholder="User name" class="form-control" autocomplete="off">
         <span style="color: aqua">
             @error('name')
                 {{ $message }}
             @enderror
+            @if (session('error'))
+                {{ session('error') }}
+            @endif
         </span>
         <br>
         <input type="email" name="email" placeholder="enter email" class="form-control"  autocomplete="off">

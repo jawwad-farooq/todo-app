@@ -41,7 +41,7 @@
       <h1>Login</h1>
       <form action="login" method="POST" class="form-group">
          @csrf
-         <input type="text" name="name" placeholder="Enter name" class="form-control"  autocomplete="off">
+         <input type="text" name="name" placeholder="User name" class="form-control"  autocomplete="off">
          <span style="color: aqua">@error('name')
              {{($message)}}
          @enderror</span>
