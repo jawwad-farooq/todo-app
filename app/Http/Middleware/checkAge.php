@@ -22,7 +22,7 @@ class checkAge
         if( $path == 'welcome' && !Session::get('user')){
             return redirect('/sign-in');
         }
-        else if($path == 'user' && Session::get('user')){
+        else if(($path == 'sign-in' && Session::get('user')) || ($path == '/' && Session::get('user'))){
             return redirect('/welcome');
         }
         return $next($request);
