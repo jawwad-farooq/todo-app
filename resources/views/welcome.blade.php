@@ -22,7 +22,6 @@
          });
 
          
-         // var userId = "{{ $user->id }}";
          var userID = $('.user_id').val();
          
          function displayData() {
@@ -120,8 +119,6 @@
 
 <style>
    body {
-       /* display: flex; */
-       /* flex-wrap: wrap; */
        background-color: #12151d !important;
        color: #fff;
        font-family: Tahoma;
@@ -175,13 +172,7 @@
             </tr>
          </thead>
          <tbody id="getdata">
-            {{-- @foreach ($rows as $row)
-               <tr>
-                  <td>{{ $row['taskname'] }}</td>
-                  <td><input type="checkbox" name="checkmark" class="check-mark" value="done" data-task-id="{{ $row['id'] }}" ></td>
-                  <td><button class="del-btn btn btn-danger" value="{{ $row['id'] }}">delete</button> </td>
-               </tr>
-            @endforeach --}}
+            
          </tbody>
       </table>
       <h1 id="us"></h1>

@@ -12,6 +12,6 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Model
 {
-    use HasFactory;
+    use HasFactory, HasRoles, Notifiable, HasApiTokens;
     // public $timestamps = false;
 }
