@@ -2,7 +2,7 @@
 
 <head>
 
-    <title>Create Permission</title>
+    <title>All Users</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -22,8 +22,8 @@
             color:red;
             margin: 0px 0px 20px;
         }
-        input.form-control {
-            background: transparent;
+        input.form-control, tr {
+            background: transparent !important;
             color: #fff;
         }
         .card {
@@ -40,22 +40,26 @@
 
 <body>
     <div class="card">
-    <h1>Create Permission</h1>
-    <form action="new-permission" method="POST" class="form-group">
-        @csrf
-        <input type="text" name="name" placeholder="Permission title" class="form-control" autocomplete="off">
-        <span style="color: aqua">
-        </span>
-        <br>
-        @foreach ($roles as $role)
-            <label for="">
-                <input type="checkbox" name="role" value="{{ $role['id'] }}"/>
-                {{ $role['name'] }}
-            </label>
+    <h1>All Users</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>User</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+        @foreach ($user as $user)
+            <tr>
+                <td>{{ $user->name }}</td>
+                <td></td>
+                <td>
+                    <button class="btn btn-danger">Delete</button>
+                    <button class="btn btn-primary">Edit</button>
+                </td>
+            </tr>
         @endforeach
-        <br>
-        <input type="submit" name="submit" class="btn btn-primary" value="Create">
-    </form>
+
+    </table>
+    
 </div>
 </body>
 

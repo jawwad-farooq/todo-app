@@ -28,6 +28,7 @@ Route::get('create-roles', [RoleController::class, 'ShowPremissions']);
 Route::get('create-permission', [PermissionController::class, 'ShowRoles']);
 Route::get('showtask/{userID}', [TaskController::class, 'showTask']);
 Route::get('showuserid/{userID}', [TaskController::class, 'showUserID']);
+Route::get('all-users', [UserController::class, 'showUsers']);
 
 Route::delete('deletetask/{id}', [TaskController::class, 'deleteTask']);
 

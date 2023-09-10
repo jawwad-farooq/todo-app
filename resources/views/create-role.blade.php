@@ -48,7 +48,10 @@
         </span>
         <br>
         @foreach ($permissions as $permission)
-            <li>{{ $permission['name'] }}</li>
+        <label for="">
+            <input type="checkbox" name="permission" value="{{ $permission['id'] }}"/>
+            {{ $permission['name'] }}
+        </label>
         @endforeach
         <br>
         <input type="submit" name="submit" class="btn btn-primary" value="Create">

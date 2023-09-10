@@ -5,15 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 use Session;
 
 class UserController extends Controller
 {
-    //
-    function printing (){
-        return 'hello world';
+    //https://www.tutsmake.com/laravel-8-user-roles-and-permissions-tutorial-example/#google_vignette
+    function showUsers (){
+        // $users = User::all();
+        // return view('all-users',['users' => $users]);
+
+        $user = User::all();
+        $roles = Role::pluck('name','name')->all();
+     
+        return view('all-users',compact('user','roles'));
     }
+
+    
+    
     function getData(Request $req){
         $req->validate([
             'name' => 'required',
