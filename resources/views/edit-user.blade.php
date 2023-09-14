@@ -41,8 +41,9 @@
 <body>
     <div class="card">
     <h1>Edit User</h1>
-    <form action="{{ route('update-user', ['id' => $user->id]) }}" method="POST" class="form-group">
+    <form action="{{ url('update-user/'.$user->id) }}" method="POST" class="form-group">
         @csrf
+        {{-- @method('PUT') --}}
         <input type="text" name="name" placeholder="User name" class="form-control" autocomplete="off" value="{{ $user->name }}">
         <span style="color: aqua">
             @error('name')
@@ -60,7 +61,7 @@
             @enderror
         </span>
         <br>
-        <input type="password" name="password" placeholder="enter password" class="form-control"  autocomplete="off" value="{{ $user->email }}">
+        <input type="password" name="password" placeholder="enter password" class="form-control"  autocomplete="off" value="">
         <span style="color: aqua">
             @error('password')
                 {{ $message }}

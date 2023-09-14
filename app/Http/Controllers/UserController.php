@@ -59,28 +59,35 @@ class UserController extends Controller
 
     public function Update(Request $request, $id)
     {
+        $user = User::find($id);
+
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'required',
-            'roles' => 'required'
+            'password' => 'sometimes|nullable|min:6',
+            'role' => 'required'
         ]);
      
-        $input = $request->all();
-        if(!empty($input['password'])){ 
-            $input['password'] = Hash::make($input['password']);
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        // $user->password=Hash::make($request->input('password'));
+
+        if($request->input('password')){ 
+            $user->password = Hash::make($request->input('password'));
         }else{
-            $input = Arr::except($input,array('password'));    
+            $user = Arr::except($user,array('password'));    
         }
      
-        $user = User::find($id);
-        $user->update($input);
-        // DB::table('model_has_roles')->where('model_id',$id)->delete();
+        $user->save();
+
+        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        $user->assignRole($request->input('role'));
+        
      
-        $user->assignRole($request->input('roles'));
-     
-        return redirect()->route('all-users')
-                        ->with('success','User updated successfully');
+        return redirect('all-users')->with('success','User updated successfully');
+        // return response()->json([
+        //     'success' => 'updated user'
+        // ]);
     }
 
     // public function __invoke(){
@@ -107,5 +114,18 @@ class UserController extends Controller
     public function logout(){
         Session::flush();
         return redirect('sign-in');
+    }
+
+    function DeleteUser($id) {
+        $user = User::find($id);
+        if(!$user){
+            return response()->json([
+                'error' => 'user not found'
+            ]);
+        }
+        $user->delete();
+        return response()->json([
+            'success' => 'user deleted'
+        ]);
     }
 }

@@ -32,6 +32,7 @@ Route::get('all-users', [UserController::class, 'showUsers']);
 Route::get('edit-user/{id}', [UserController::class, 'Edit']);
 
 Route::delete('deletetask/{id}', [TaskController::class, 'deleteTask']);
+Route::delete('delete-user/{id}', [UserController::class, 'DeleteUser']);
 
 Route::post('updatetask/{id}', [TaskController::class, 'updateTask']);
 Route::post('newtask', [TaskController::class, 'newTask']);
@@ -39,13 +40,13 @@ Route::post('user', [UserController::class, 'getData']);
 Route::post('new-roles', [RoleController::class, 'NewRole']);
 Route::post('new-permission', [PermissionController::class, 'NewPermission']);
 Route::post('login', [UserController::class, 'Login']);
-Route::post('update-user/{id}', [UserController::class, 'Update'])->name('update-user');
+Route::post('update-user/{id}', [UserController::class, 'Update']);
 
-Route::group(['Middleware' => "web"], function () {
+// Route::group(['Middleware' => "web"], function () {
     Route::view('sign-in', 'sign-in');
     Route::view('welcome', '/welcome');
     Route::view('/', '/sign-up');
-});
+// });
 
 
 Route::get('ajax', function () {

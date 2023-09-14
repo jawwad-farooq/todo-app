@@ -50,10 +50,14 @@
         @foreach ($user as $user)
             <tr>
                 <td>{{ $user->name }}</td>
-                <td></td>
+                <td>@if(!empty($user->getRoleNames()))
+                    @foreach($user->getRoleNames() as $v)
+                        <label class="badge badge-success">{{ $v }}</label>
+                    @endforeach
+                @endif</td>
                 <td>
-                    <button class="btn btn-danger">Delete</button>
-                    <button class="btn btn-primary">Edit</button>
+                    <a href="{{ url('delete-user/'.$user->id) }}" class="btn btn-danger">Delete</a>
+                    <a href="{{ url('edit-user/'.$user->id) }}" class="btn btn-primary">Edit</a>
                 </td>
             </tr>
         @endforeach
