@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Task;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class TaskController extends Controller
 {
@@ -20,13 +22,18 @@ class TaskController extends Controller
 
     public function showTask($userID)
     {
+        $user = User::find($userID);
         $current = Task::where('user_id', $userID)->get();
+        $roles = Role::pluck('name','name')->all();
         if (!$userID) {
             return response()->json([
                 'error' => 'user not found'
             ], 404);
         } else {
-            return response()->json($current);
+            return response()->json([
+                'current' => $current,
+                'roles' => $user->roles, // Assuming you have a roles relationship defined in your User model
+            ]);
         }
     }
 

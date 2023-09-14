@@ -32,11 +32,25 @@
                success: function (response) {
                      var tbody = $('#getdata');
                      tbody.empty();
+                     var roles = response.roles.map(function (role) {
+                        return role.name;
+                     });
                      $.each(response, function (key, item) {
                         var isChecked = item.check ? 'checked' : 'noCheck';
+                        var deleteButton = '';
+                        var checkBox = '';
+
+                        if (roles.includes('admin')) {
+                           deleteButton = '<td><button class="del-btn btn btn-danger" value="' + item.id + '">delete</button></td>';
+                        }
+
+                        if (roles.includes('editor') || roles.includes('admin')) {
+                           checkBox = '<td><input type="checkbox" name="checkmark" class="check-mark" value="done" data-task-id="'+item.id+'" '+isChecked+'></td>';
+                        }
+
                         tbody.append('<tr><td>' + item.taskname + '</td>\
-                           <td><input type="checkbox" name="checkmark" class="check-mark" value="done" data-task-id="'+item.id+'" '+isChecked+'></td>\
-                           <td><button class="del-btn btn btn-danger" value="'+ item.id +'">delete</button> </td></tr>');
+                           ' + checkBox + '\
+                           ' + deleteButton + '</tr>');
                      });
                },
                error: function (xhr, status, error) {
@@ -153,12 +167,20 @@
       <div class="top-line">
    <h1>{{ $user->name }} Create Task</h1>
    <a href="{{url('logout')}}" class="btn btn-danger" style="margin-bottom: auto; margin-top: auto;">Logout</a></div>
-  <form action="{{url('newtask')}}" method="POST" id="addpost">
-    @csrf
-    <input type="hidden" name="user_id" value="{{$user->id}}" class="user_id">
-    <input type="text" name="task_name" class="form-control" placeholder="Enter Task Name">
-    <input type="submit" value="Add" class="btn btn-primary" style="margin-top: 20px">
-  </form>
+   {{-- @php
+      $userRoles = $user->roles->pluck('name')->toArray();
+   @endphp --}}
+
+      
+      <form action="{{url('newtask')}}" method="POST" id="addpost">
+         @csrf
+         <input type="hidden" name="user_id" value="{{$user->id}}" class="user_id">
+         @if ($user->roles->contains('name', 'creator') || $user->roles->contains('name', 'admin'))
+         <input type="text" name="task_name" class="form-control" placeholder="Enter Task Name">
+         <input type="submit" value="Add" class="btn btn-primary" style="margin-top: 20px">
+         @endif
+      </form>
+   
 </div>
 
 
