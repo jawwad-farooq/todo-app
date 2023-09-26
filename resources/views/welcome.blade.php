@@ -35,22 +35,22 @@
                      var roles = response.roles.map(function (role) {
                         return role.name;
                      });
-                     $.each(response, function (key, item) {
+                     $.each(response.current, function (key, item) {
                         var isChecked = item.check ? 'checked' : 'noCheck';
                         var deleteButton = '';
                         var checkBox = '';
 
                         if (roles.includes('admin')) {
-                           deleteButton = '<td><button class="del-btn btn btn-danger" value="' + item.id + '">delete</button></td>';
+                           deleteButton = '<button class="del-btn btn btn-danger" value="' + item.id + '">delete</button>';
                         }
 
                         if (roles.includes('editor') || roles.includes('admin')) {
-                           checkBox = '<td><input type="checkbox" name="checkmark" class="check-mark" value="done" data-task-id="'+item.id+'" '+isChecked+'></td>';
+                           checkBox = '<input type="checkbox" name="checkmark" class="check-mark" value="done" data-task-id="'+item.id+'" '+isChecked+'>';
                         }
 
                         tbody.append('<tr><td>' + item.taskname + '</td>\
-                           ' + checkBox + '\
-                           ' + deleteButton + '</tr>');
+                           <td>' + checkBox + '</td>\
+                           <td>' + deleteButton + '</td></tr>');
                      });
                },
                error: function (xhr, status, error) {
@@ -176,8 +176,8 @@
          @csrf
          <input type="hidden" name="user_id" value="{{$user->id}}" class="user_id">
          @if ($user->roles->contains('name', 'creator') || $user->roles->contains('name', 'admin'))
-         <input type="text" name="task_name" class="form-control" placeholder="Enter Task Name">
-         <input type="submit" value="Add" class="btn btn-primary" style="margin-top: 20px">
+            <input type="text" name="task_name" class="form-control" placeholder="Enter Task Name">
+            <input type="submit" value="Add" class="btn btn-primary" style="margin-top: 20px">
          @endif
       </form>
    

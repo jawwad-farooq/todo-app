@@ -19,10 +19,10 @@ class checkAge
     public function handle(Request $request, Closure $next)
     {
         $path = $request->path();
-        if( $path == 'welcome' && !Session::get('user')){
+        if( !in_array($request->path(),['/','sign-in']) && !Session::get('user')){
             return redirect('/sign-in');
         }
-        else if(($path == 'sign-in' && Session::get('user')) || ($path == '/' && Session::get('user'))){
+        else if(in_array($request->path(),['/','sign-in']) && Session::get('user')) {
             return redirect('/welcome');
         }
         return $next($request);
