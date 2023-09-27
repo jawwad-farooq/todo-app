@@ -42,11 +42,11 @@ Route::post('new-permission', [PermissionController::class, 'NewPermission']);
 Route::post('login', [UserController::class, 'Login']);
 Route::post('update-user/{id}', [UserController::class, 'Update']);
 
-// Route::group(['Middleware' => "web"], function () {
+Route::group(['Middleware' => "web"], function () {
     Route::view('sign-in', 'sign-in');
     Route::view('welcome', '/welcome');
     Route::view('/', '/sign-up');
-// });
+});
 
 
 Route::get('ajax', function () {
