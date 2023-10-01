@@ -23,29 +23,48 @@ use App\Http\Middleware\checkAge;
 
 
 
-Route::get('logout', [UserController::class, 'logout']);
-Route::get('create-roles', [RoleController::class, 'ShowPremissions']);
-Route::get('create-permission', [PermissionController::class, 'ShowRoles']);
-Route::get('showtask/{userID}', [TaskController::class, 'showTask']);
-Route::get('showuserid/{userID}', [TaskController::class, 'showUserID']);
-Route::get('all-users', [UserController::class, 'showUsers']);
-Route::get('edit-user/{id}', [UserController::class, 'Edit']);
+// Route::get('logout', [UserController::class, 'logout']);
+// Route::get('create-roles', [RoleController::class, 'ShowPremissions']);
+// Route::get('create-permission', [PermissionController::class, 'ShowRoles']);
+// Route::get('showtask/{userID}', [TaskController::class, 'showTask']);
+// Route::get('showuserid/{userID}', [TaskController::class, 'showUserID']);
+// Route::get('all-users', [UserController::class, 'showUsers']);
+// Route::get('edit-user/{id}', [UserController::class, 'Edit']);
 
-Route::delete('deletetask/{id}', [TaskController::class, 'deleteTask']);
-Route::delete('delete-user/{id}', [UserController::class, 'DeleteUser']);
+// Route::delete('deletetask/{id}', [TaskController::class, 'deleteTask']);
+// Route::delete('delete-user/{id}', [UserController::class, 'DeleteUser']);
 
-Route::post('updatetask/{id}', [TaskController::class, 'updateTask']);
-Route::post('newtask', [TaskController::class, 'newTask']);
-Route::post('user', [UserController::class, 'getData']);
-Route::post('new-roles', [RoleController::class, 'NewRole']);
-Route::post('new-permission', [PermissionController::class, 'NewPermission']);
-Route::post('login', [UserController::class, 'Login']);
-Route::post('update-user/{id}', [UserController::class, 'Update']);
+// Route::post('updatetask/{id}', [TaskController::class, 'updateTask']);
+// Route::post('newtask', [TaskController::class, 'newTask']);
+// Route::post('user', [UserController::class, 'getData']);
+// Route::post('new-roles', [RoleController::class, 'NewRole']);
+// Route::post('new-permission', [PermissionController::class, 'NewPermission']);
+// Route::post('login', [UserController::class, 'Login']);
+// Route::post('update-user/{id}', [UserController::class, 'Update']);
 
 Route::group(['Middleware' => "web"], function () {
     Route::view('sign-in', 'sign-in');
     Route::view('welcome', '/welcome');
     Route::view('/', '/sign-up');
+        
+    Route::get('logout', [UserController::class, 'logout']);
+    Route::get('create-roles', [RoleController::class, 'ShowPremissions']);
+    Route::get('create-permission', [PermissionController::class, 'ShowRoles']);
+    Route::get('showtask/{userID}', [TaskController::class, 'showTask']);
+    Route::get('showuserid/{userID}', [TaskController::class, 'showUserID']);
+    Route::get('all-users', [UserController::class, 'showUsers']);
+    Route::get('edit-user/{id}', [UserController::class, 'Edit']);
+
+    Route::delete('deletetask/{id}', [TaskController::class, 'deleteTask']);
+    Route::delete('delete-user/{id}', [UserController::class, 'DeleteUser']);
+
+    Route::post('updatetask/{id}', [TaskController::class, 'updateTask']);
+    Route::post('newtask', [TaskController::class, 'newTask']);
+    Route::post('user', [UserController::class, 'getData']);
+    Route::post('new-roles', [RoleController::class, 'NewRole']);
+    Route::post('new-permission', [PermissionController::class, 'NewPermission']);
+    Route::post('login', [UserController::class, 'Login']);
+    Route::post('update-user/{id}', [UserController::class, 'Update']);
 });
 
 
