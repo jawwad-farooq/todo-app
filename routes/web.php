@@ -45,8 +45,9 @@ Route::post('/forgot-password', function (Request $request) {
     $request->validate(['email' => 'required|email']);
  
     $status = Password::sendResetLink(
-        $request->only('email')
+        $defug = $request->only('email')
     );
+    // dd($defug);
  
     return $status === Password::RESET_LINK_SENT
                 ? back()->with(['status' => __($status)])
@@ -64,12 +65,14 @@ Route::post('/forgot-password', function (Request $request) {
 |
 MAIL_MAILER=smtp
 MAIL_HOST=smtp.gmail.com
-MAIL_PORT=1025
+MAIL_PORT=587
 MAIL_USERNAME=jawadmuhamad786@gmail.com
-MAIL_PASSWORD=gvux cubh asgq omov
-MAIL_ENCRYPTION=ssl
+MAIL_PASSWORD=gvuxcubhasgqomov
+MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS=jawadmuhamad786@gmail.com
 MAIL_FROM_NAME="todo app"
+MAIL_LOG=true
+
 */
 
 
@@ -119,11 +122,11 @@ Route::group(['Middleware' => "web"], function () {
 });
 
 Route::get('/forgot-password', function () {
-    return view('auth.forgot-password');
+    return view('forgot-password');
 })->middleware('guest')->name('password.request');
 
 Route::get('/reset-password/{token}', function (string $token) {
-    return view('auth.reset-password', ['token' => $token]);
+    return view('reset-password', ['token' => $token]);
 })->middleware('guest')->name('password.reset');
 
 Route::get('ajax', function () {
