@@ -13,7 +13,6 @@ use Session;
 
 class UserController extends Controller
 {
-    //https://www.tutsmake.com/laravel-8-user-roles-and-permissions-tutorial-example/#google_vignette
     function showUsers (){
         // $users = User::all();
         // return view('all-users',['users' => $users]);

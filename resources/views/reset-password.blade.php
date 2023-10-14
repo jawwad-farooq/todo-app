@@ -9,35 +9,36 @@
 
   <style>
    body {
-       display: flex;
-       flex-wrap: wrap;
-       background-color: #12151d !important;
-       color: #fff;
-       font-family: Tahoma;
-       text-transform: capitalize;
-   }
-   h1 {
-       color:red;
-       margin: 0px 0px 20px;
-   }
-   input.form-control {
-       background: transparent;
-       color: #0a0a0a;
-   }
-   .card {
-       max-width: 600px;
-       width: 100%;
-       margin: auto;
-       padding: 25px;
-       border-radius: 20px;
-       box-shadow: 0 0 17px black;
-   }
+            display: flex;
+            flex-wrap: wrap;
+            background-color: #12151d !important;
+            color: #fff;
+            font-family: Tahoma;
+            text-transform: capitalize;
+        }
+        h1 {
+            color:red;
+            margin: 0px 0px 20px;
+        }
+        input.form-control {
+            background: transparent;
+            color: #fff;
+        }
+        .card {
+            max-width: 600px;
+            width: 100%;
+            margin: auto;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 0 17px black;
+        }
 </style>
 </head>
       
    
 <body>
-    <h2>Reset Your Password</h2>
+    <div class="card">
+    <h1>Reset Your Password</h1>
 
     @if (session('status'))
         <div class="alert alert-success">
@@ -45,21 +46,19 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('password.update') }}">
+    <form method="POST" action="{{ route('password.update') }}"  class="form-group">
         @csrf
 
         <input type="hidden" name="token" value="{{ $token }}">
-
-        <label for="email">Email Address</label>
-        <input type="email" name="email" id="email" required>
-
-        <label for="password">New Password</label>
-        <input type="password" name="password" id="password" required>
-
-        <label for="password_confirmation">Confirm New Password</label>
-        <input type="password" name="password_confirmation" id="password_confirmation" required>
-
-        <button type="submit">Reset Password</button>
+        <br>
+        <input type="email" name="email" id="email" placeholder="Email Address" autocomplete="off"  required  class="form-control">
+        <br>
+        <input type="password" name="password" id="password" placeholder="New Password" autocomplete="off"  required  class="form-control">
+        <br>
+        <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirm New Password" autocomplete="off" required  class="form-control">
+        <br>
+        <button type="submit" class="btn btn-primary" >Reset Password</button>
     </form>
+    </div>
 </body>
 </html>

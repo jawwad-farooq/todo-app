@@ -15,7 +15,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
- 
+
 Route::post('/reset-password', function (Request $request) {
     $request->validate([
         'token' => 'required',
@@ -45,9 +45,9 @@ Route::post('/forgot-password', function (Request $request) {
     $request->validate(['email' => 'required|email']);
  
     $status = Password::sendResetLink(
-        $defug = $request->only('email')
+        $request->only('email')
     );
-    // dd($defug);
+
  
     return $status === Password::RESET_LINK_SENT
                 ? back()->with(['status' => __($status)])
