@@ -54,6 +54,8 @@
          <input type="submit" name="Login" class="btn btn-primary" value="Log In">
       </form>
       <p>Don't have an account ?</p><a href="{{ url('/') }}">SignUp</a>
+      <br>
+      <a href="{{ url('/forgot-password') }}">Forgot Password ?</a>
    </div>
    </body>
 

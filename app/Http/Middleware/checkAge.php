@@ -23,6 +23,7 @@ class checkAge
             return redirect('/sign-in');
         }
         elseif(($path == 'sign-up' || $path == 'sign-in') && Session::get('user')) {
+            // dd("from middleware",Session::get('user'));
             return redirect('/welcome');
         }
         return $next($request); 

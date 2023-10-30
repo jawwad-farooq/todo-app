@@ -101,9 +101,11 @@ class UserController extends Controller
         $password = $request->input('password');
 
         $user = User::where('name', $username)->first();
-        $request->session()->put('user', $user);
 
         if ($user !== null && Hash::check($password, $user->password)) {
+            $request->session()->put('user', $user);
+
+            // dd("authenticated", $user);
             return redirect('welcome');
         } else {
             return redirect('sign-in')->with('error', 'Invalid credentials. Please try again.');

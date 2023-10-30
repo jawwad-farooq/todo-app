@@ -165,7 +165,7 @@
 
    <div class="card">
       <div class="top-line">
-   <h1>{{ $user->name }} Create Task</h1>
+   <h1>{{ $user->name }} Create Task </h1>
    <a href="{{url('logout')}}" class="btn btn-danger" style="margin-bottom: auto; margin-top: auto;">Logout</a></div>
    {{-- @php
       $userRoles = $user->roles->pluck('name')->toArray();
