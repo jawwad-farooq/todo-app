@@ -26,4 +26,6 @@ class PermissionController extends Controller
         $roles = Role::all();
         return view('create-permission', ['roles' => $roles]);
     }
+
+    
 }
